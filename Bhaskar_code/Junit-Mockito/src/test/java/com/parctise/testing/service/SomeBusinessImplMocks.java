@@ -1,27 +1,28 @@
 package com.parctise.testing.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.parctise.testing.data.SomeBusinessDataService;
 
 
-
+@ExtendWith(MockitoExtension.class)
 class SomeBusinessImplMocks {
 	
-	private SomeBusinessImpl business=new SomeBusinessImpl();
-	private SomeBusinessDataService service= mock(SomeBusinessDataService.class);
+	@Mock
+	private SomeBusinessDataService service;
 	
+	@InjectMocks
+	private SomeBusinessImpl business;
 	
-	@BeforeEach
-	public void initialize() {
-		business.setSomeBusinessDataService(service);
-	}
+
+	
 	
 	@Test
 	void calculateSumByDataService_basic() {
