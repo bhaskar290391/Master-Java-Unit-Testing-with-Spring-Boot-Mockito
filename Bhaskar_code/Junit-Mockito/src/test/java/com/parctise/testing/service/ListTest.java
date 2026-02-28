@@ -1,13 +1,17 @@
 package com.parctise.testing.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class ListTest {
 	
 	private List list=mock(List.class);
@@ -31,6 +35,13 @@ class ListTest {
 		when(list.get(0)).thenReturn("Bhaskar");
 		assertEquals("Bhaskar", list.get(0));
 		assertEquals(null, list.get(1));
+	}
+	
+	@Test
+	void list_withParemeters_GenericValue() {
+		when(list.get(anyInt())).thenReturn("Bhaskar");
+		assertEquals("Bhaskar", list.get(0));
+		assertEquals("Bhaskar", list.get(1));
 	}
 
 }
