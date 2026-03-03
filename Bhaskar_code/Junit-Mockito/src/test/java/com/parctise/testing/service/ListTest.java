@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -60,6 +61,15 @@ class ListTest {
 		verify(list,atLeastOnce()).get(anyInt());
 		verify(list,atMost(2)).get(anyInt());
 		verify(list,never()).get(2);
+	}
+	
+	@Test
+	public void argumentCapture() {
+		list.add("Bhaskar");
+		ArgumentCaptor<String> captor= ArgumentCaptor.forClass(String.class);
+		verify(list).add(captor.capture());
+		
+		assertEquals("Bhaskar", captor.getValue());
 	}
 
 }
