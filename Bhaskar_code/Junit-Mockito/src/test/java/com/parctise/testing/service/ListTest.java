@@ -7,6 +7,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -70,6 +72,19 @@ class ListTest {
 		verify(list).add(captor.capture());
 		
 		assertEquals("Bhaskar", captor.getValue());
+	}
+	
+	
+	@Test
+	public void argumentCapture_MultipleTimes() {
+		list.add("Bhaskar");
+		list.add("Mudaliyar");
+		ArgumentCaptor<String> captor= ArgumentCaptor.forClass(String.class);
+		verify(list,times(2)).add(captor.capture());
+		
+		List<String> allValues = captor.getAllValues();
+		assertEquals("Bhaskar", allValues.get(0));
+		assertEquals("Mudaliyar", allValues.get(1));
 	}
 
 }
