@@ -45,5 +45,7 @@ class SomeBusinessImplMocks {
 		
 		assertEquals(5, business.calculateSumBySomeBusinessDataService());
 	}
+	
+
 
 }
