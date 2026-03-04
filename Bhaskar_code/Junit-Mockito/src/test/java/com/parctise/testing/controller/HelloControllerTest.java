@@ -1,7 +1,8 @@
 package com.parctise.testing.controller;
 
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -16,14 +17,18 @@ public class HelloControllerTest {
 
 	@Autowired
 	private MockMvc mockmvc;
-	
+
 	@Test
 	public void helloWorldTest_basic() throws Exception {
+
+		RequestBuilder request = MockMvcRequestBuilders.get("/helloWorld").accept(MediaType.APPLICATION_JSON);
 		
-		RequestBuilder request= MockMvcRequestBuilders.get("/helloWorld").accept(MediaType.APPLICATION_JSON);
-		MvcResult andReturn = mockmvc.perform(request).andReturn();
-		
-		assertEquals("Hello-World",andReturn.getResponse().getContentAsString());
-		
+		MvcResult andReturn = mockmvc.perform(request)
+				.andExpect(status().isOk())
+				.andExpect(content().string("Hello-World"))
+				.andReturn();
+
+		assertEquals("Hello-World", andReturn.getResponse().getContentAsString());
+
 	}
 }
