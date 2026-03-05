@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -51,6 +53,26 @@ public class ItemControllerTest {
 		MvcResult andReturn = mockmvc.perform(request)
 				.andExpect(status().isOk())
 				.andExpect(content().json("{\"id\":1,\"name\":\"Test\",\"price\":10,\"qunatity\":100}"))
+				.andReturn();
+
+		//assertEquals("Hello-World", andReturn.getResponse().getContentAsString());
+
+	}
+	
+	
+	
+	
+	@Test
+	public void ItemsTestBySevice_database() throws Exception {
+		
+		when(service.retrieveItemFromDataBase()).thenReturn(Arrays.asList(new Items(1, "Test", 10, 100),
+				new Items(2, "Test2", 20, 20))) ;
+		RequestBuilder request = MockMvcRequestBuilders.get("/dummyItemServiceFromDatabase").accept(MediaType.APPLICATION_JSON);
+		
+		MvcResult andReturn = mockmvc.perform(request)
+				.andExpect(status().isOk())
+				.andExpect(content().json("[{id:1,name:Test,price:10,qunatity:100},"
+						+ "{id:2,name:Test2,price:20,qunatity:20}]"))
 				.andReturn();
 
 		//assertEquals("Hello-World", andReturn.getResponse().getContentAsString());
